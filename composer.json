@@ -1,11 +1,19 @@
 {
     "name": "insenseanalytics/nova-bar-metrics",
-    "description": "A Laravel Nova tool.",
+    "description": "A Laravel Nova tool for bar chart metrics and frequency distributions.",
     "keywords": [
         "laravel",
-        "nova"
+        "nova",
+        "bar chart",
+        "frequency distributions"
     ],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Paras Malhotra",
+            "email": "paras@insenseanalytics.com"
+        }
+    ],
     "require": {
         "php": ">=7.1.0"
     },
