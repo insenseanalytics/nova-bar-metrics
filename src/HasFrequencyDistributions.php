@@ -11,37 +11,39 @@ use Illuminate\Database\Eloquent\Builder;
  */
 trait HasFrequencyDistributions
 {
-	/**
-	 * Return a partition/derived result showing the segments of a frequency range.
-	 *
-	 * @param \Illuminate\Http\Request                     $request
-	 * @param \Illuminate\Database\Eloquent\Builder|string $model
-	 * @param string                                       $column
-	 * @param int|null                                     $min
-	 * @param int|null                                     $max
-	 *
-	 * @return \Laravel\Nova\Metrics\PartitionResult
-	 */
-	public function distributionsByStepSize($request, $model, $column, $stepSize)
-	{
-		$subQuery = $model instanceof Builder ? $model : (new $model())->newQuery();
+    /**
+     * Return a partition/derived result showing the segments of a frequency range.
+     *
+     * @param \Illuminate\Http\Request                     $request
+     * @param \Illuminate\Database\Eloquent\Builder|string $model
+     * @param string                                       $column
+     * @param int|null                                     $min
+     * @param int|null                                     $max
+     *
+     * @return \Laravel\Nova\Metrics\PartitionResult
+     */
+    public function distributions($request, $model, $column, $stepSize)
+    {
+        $subQuery = $model instanceof Builder ? $model : (new $model())->newQuery();
 
-		$expression = (string) FrequencyDistributionExpressionFactory::make(
-			$subQuery, $column, $stepSize
-		);
+        $expression = (string) FrequencyDistributionExpressionFactory::make(
+            $subQuery,
+            $column,
+            $stepSize
+        );
 
-		$subQuery->orderBy($column, 'asc');
+        $subQuery->orderBy($column, 'asc');
 
-		$query = DB::table(DB::raw("({$subQuery->toSql()}) as sub"))
-			->mergeBindings($subQuery->getQuery());
+        $query = DB::table(DB::raw("({$subQuery->toSql()}) as sub"))
+            ->mergeBindings($subQuery->getQuery());
 
-		$results = $query
-			->select(DB::raw("{$expression} as rng, count(*) as aggregate"))
-			->groupBy(DB::raw('1'))
-			->get();
+        $results = $query
+            ->select(DB::raw("{$expression} as rng, count(*) as aggregate"))
+            ->groupBy(DB::raw('1'))
+            ->get();
 
-		return $this->result($results->mapWithKeys(function ($result) use ($column) {
-			return $this->formatAggregateResult($result, 'rng');
-		})->all());
-	}
+        return $this->result($results->mapWithKeys(function ($result) use ($column) {
+            return $this->formatAggregateResult($result, 'rng');
+        })->all());
+    }
 }
