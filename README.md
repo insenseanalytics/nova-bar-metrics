@@ -13,7 +13,7 @@ This [Nova](https://nova.laravel.com) tool lets you:
 ## Frequency Distribution Metric Screenshot (Pie Chart)
 <img alt="screenshot of the backup tool" src="https://insenseanalytics.github.io/public-assets/nova-bar-metrics/nova-bar-metrics-freq-pie.png" height="150" />
 
-## Quick Introduction
+## Quick Introduction (Bar Chart Metrics)
 
 For a bar chart metric, just create a metric class like you normally would for a `Partition` metric. All the available methods in a `Partition` metric are also available for `BarChartMetric`! Instead of extending `Partition` you would just need to extend `BarChartMetric` like so:
 ```php
@@ -28,6 +28,8 @@ class BrandsPerCategory extends BarChartMetric
 }
 ```
 You can also use the `suffix`, `prefix`, `dollars` and `euros` methods like in a `TrendMetric` in Laravel Nova. Besides this, we also have a `precision` method to set the precision of the `avg` metric shown in the top right corner of the bar chart.
+
+## Quick Introduction (Frequency Distributions in Bar Chart Metrics and Partition Metrics)
 
 To create a frequency distributions chart, either extend the `BarChartMetric` class or extend the `Partition` class and use the trait `HasFrequencyDistributions`. You can use the `distributions` helper method to create the frequency distribution chart like so:
 
