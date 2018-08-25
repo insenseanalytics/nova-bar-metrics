@@ -1,5 +1,7 @@
 # A Laravel Nova tool for bar chart metrics and frequency distributions
 
+![Packagist](https://img.shields.io/packagist/dt/insenseanalytics/nova-bar-metrics.svg)
+
 This [Nova](https://nova.laravel.com) tool lets you:
 - create bar charts
 - create frequency distribution charts (using pie charts and/or bar charts)
