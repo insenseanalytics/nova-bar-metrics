@@ -15,7 +15,7 @@ This [Nova](https://nova.laravel.com) tool lets you:
 ## Frequency Distribution Metric Screenshot (Pie Chart)
 <img alt="screenshot of the backup tool" src="https://insenseanalytics.github.io/public-assets/nova-bar-metrics/nova-bar-metrics-freq-pie.png" height="150" />
 
-## Quick Introduction (Bar Chart Metrics)
+## Bar Chart Metrics
 
 For a bar chart metric, just create a metric class like you normally would for a `Partition` metric. All the available methods in a `Partition` metric are also available for `BarChartMetric`! Instead of extending `Partition` you would just need to extend `BarChartMetric` like so:
 ```php
@@ -31,7 +31,7 @@ class BrandsPerCategory extends BarChartMetric
 ```
 You can also use the `suffix`, `prefix`, `dollars` and `euros` methods like in a `TrendMetric` in Laravel Nova. Besides this, we also have a `precision` method to set the precision of the `avg` metric shown in the top right corner of the bar chart.
 
-## Quick Introduction (Frequency Distributions in Bar Chart Metrics and Partition Metrics)
+## QFrequency Distributions for Bar Chart Metrics and Partition Metrics
 
 To create a frequency distributions chart, either extend the `BarChartMetric` class or extend the `Partition` class and use the trait `HasFrequencyDistributions`. You can use the `distributions` helper method to create the frequency distribution chart like so:
 
@@ -48,6 +48,20 @@ class BrandFacebookFollowers extends BarChartMetric
 }
 ``` 
 In the example above, 100000 is the `step size` to use for the ranges in the frequency distribution and facebook_followers is the `column to distribute` by ranges.
+
+Instead of providing the `step size`, you may provide the max number of steps instead using the `distributionsWithSteps` method and the package would automatically calculate the step size like so:
+
+```php
+use Insenseanalytics\NovaBarMetrics\BarChartMetric;
+
+class BrandFacebookFollowers extends BarChartMetric
+{
+  public function calculate(Request $request)
+  {
+    return $this->distributionsWithSteps($request, Brand::class, 'facebook_followers', 15);
+  }
+}
+``` 
 
 For friendly formatted ranges (K for thousands, M for millions, B for billions), you can use the `withFormattedRangeLabels` method like so:
 
