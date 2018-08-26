@@ -31,7 +31,7 @@ class BrandsPerCategory extends BarChartMetric
 ```
 You can also use the `suffix`, `prefix`, `dollars` and `euros` methods like in a `TrendMetric` in Laravel Nova. Besides this, we also have a `precision` method to set the precision of the `avg` metric shown in the top right corner of the bar chart.
 
-## QFrequency Distributions for Bar Chart Metrics and Partition Metrics
+## Frequency Distributions for Bar Chart Metrics and Partition Metrics
 
 To create a frequency distributions chart, either extend the `BarChartMetric` class or extend the `Partition` class and use the trait `HasFrequencyDistributions`. You can use the `distributions` helper method to create the frequency distribution chart like so:
 
