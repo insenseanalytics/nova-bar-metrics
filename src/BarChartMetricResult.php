@@ -129,17 +129,19 @@ class BarChartMetricResult extends PartitionResult
      */
     public function withFormattedRangeLabels($labelPrecision = 0)
     {
-        $newValue = [];
+        $newData = [];
 
         foreach (($this->value ?? []) as $label => $value) {
             $labelParts = explode('-', $label);
             if (2 == count($labelParts)) {
-                $newValue[$this->formatStrNumber($labelParts[0], $labelPrecision) . ' - ' .
-                    $this->formatStrNumber($labelParts[1], $labelPrecision)] = $value;
+                $newLabel = $this->formatStrNumber($labelParts[0], $labelPrecision) . ' - ' .
+                    $this->formatStrNumber($labelParts[1], $labelPrecision);
+                $newData[$newLabel] = isset($newData[$newLabel]) ? ($value + $newData[$newLabel]) :
+                    $value;
             }
         }
 
-        $this->value = $newValue;
+        $this->value = $newData;
 
         return $this;
     }

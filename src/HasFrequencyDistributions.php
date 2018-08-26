@@ -48,4 +48,29 @@ trait HasFrequencyDistributions
             return $this->formatAggregateResult($result, 'rng');
         })->all());
     }
+
+    /**
+     * Return a partition/derived result showing the segments of a frequency range.
+     *
+     * @param \Illuminate\Http\Request                     $request
+     * @param \Illuminate\Database\Eloquent\Builder|string $model
+     * @param string                                       $column
+     * @param int                                          $maxSteps
+     *
+     * @return \Laravel\Nova\Metrics\PartitionResult
+     */
+    public function distributionsWithSteps($request, $model, $column, $maxSteps = 15)
+    {
+        $query = $model instanceof Builder ? $model : (new $model())->newQuery();
+
+        $difference = $query->max($column) - $query->min($column);
+
+        if (!$difference) {
+            $stepSize = 1;
+        } else {
+            $stepSize = round($difference / $maxSteps, 0);
+        }
+
+        return $this->distributions($request, $query, $column, $stepSize);
+    }
 }
