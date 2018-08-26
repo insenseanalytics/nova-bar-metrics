@@ -49,13 +49,13 @@ class BrandFacebookFollowers extends BarChartMetric
 ``` 
 In the example above, 100000 is the `step size` to use for the ranges in the frequency distribution and facebook_followers is the `column to distribute` by ranges.
 
-For friendly formatted ranges (K for thousands, M for millions, B for billions), you can use the `withFormattedLabels` method like so:
+For friendly formatted ranges (K for thousands, M for millions, B for billions), you can use the `withFormattedRangeLabels` method like so:
 
 ```php
 public function calculate(Request $request)
 {
   return $this->distributions($request, Brand::class, 'facebook_followers', 100000)
-              ->withFormattedLabels();
+              ->withFormattedRangeLabels();
 }
 ```
 
