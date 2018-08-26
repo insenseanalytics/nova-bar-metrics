@@ -127,7 +127,7 @@ class BarChartMetricResult extends PartitionResult
      *
      * @return array
      */
-    public function withFormattedLabels($labelPrecision = 0)
+    public function withFormattedRangeLabels($labelPrecision = 0)
     {
         $newValue = [];
 
