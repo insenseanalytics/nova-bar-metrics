@@ -17,8 +17,7 @@ trait HasFrequencyDistributions
      * @param \Illuminate\Http\Request                     $request
      * @param \Illuminate\Database\Eloquent\Builder|string $model
      * @param string                                       $column
-     * @param int|null                                     $min
-     * @param int|null                                     $max
+     * @param int                                          $stepSize
      *
      * @return \Laravel\Nova\Metrics\PartitionResult
      */
@@ -26,20 +25,23 @@ trait HasFrequencyDistributions
     {
         $subQuery = $model instanceof Builder ? $model : (new $model())->newQuery();
 
-        $expression = (string) FrequencyDistributionExpressionFactory::make(
+        $expression = FrequencyDistributionExpressionFactory::make(
             $subQuery,
             $column,
             $stepSize
-        );
+        )->getValue();
 
-        $subQuery->orderBy($column, 'asc');
+        $subQuery = $subQuery
+            ->select(DB::raw("{$expression['range']} as rng, 
+                {$expression['minVal']} as minval, count(*) as aggregate"))
+            ->groupBy(DB::raw('1'), DB::raw('2'));
 
         $query = DB::table(DB::raw("({$subQuery->toSql()}) as sub"))
             ->mergeBindings($subQuery->getQuery());
 
         $results = $query
-            ->select(DB::raw("{$expression} as rng, count(*) as aggregate"))
-            ->groupBy(DB::raw('1'))
+            ->select('rng', 'aggregate', 'minval')
+            ->orderBy('minval', 'asc')
             ->get();
 
         return $this->result($results->mapWithKeys(function ($result) use ($column) {
