@@ -111,6 +111,9 @@ Next, if you do not have package discovery enabled, you need to register the pro
     Insenseanalytics\NovaBarMetrics\NovaBarMetricsServiceProvider::class,
 ]
 ```
+## Usage
+
+You can use the console command `php artisan nova:barmetric <classname>` to create new BarMetric classes
 
 ## Contributing
 
