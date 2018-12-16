@@ -19,7 +19,7 @@ class NovaBarMetricsServiceProvider extends ServiceProvider
 			// Nova::style('nova-bar-metrics', __DIR__ . '/../dist/css/nova-bar-metrics.css');
 		});
 
-    $this->bootCommands();
+		$this->bootCommands();
 	}
 
 	/**
