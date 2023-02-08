@@ -1,5 +1,5 @@
 {
-    "name": "insenseanalytics/nova-bar-metrics",
+    "name": "iaotle/nova-bar-metrics",
     "description": "A Laravel Nova tool for bar chart metrics and frequency distributions.",
     "keywords": [
         "laravel",

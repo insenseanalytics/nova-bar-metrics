@@ -62,7 +62,7 @@ class BarChartMetricResult extends PartitionResult
      *
      * @return $this
      */
-    public function precision($precision)
+    public function precision($precision = 0, $mode = PHP_ROUND_HALF_UP)
     {
         $this->precision = $precision;
 
@@ -110,7 +110,7 @@ class BarChartMetricResult extends PartitionResult
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'value' => collect($this->value ?? [])->map(function ($value, $label) {
