@@ -1,3 +1,5 @@
+# Updated for newest Laravel Nova!
+
 # A Laravel Nova tool for bar chart metrics and frequency distributions
 
 [![License](https://poser.pugx.org/insenseanalytics/nova-bar-metrics/license)](https://packagist.org/packages/insenseanalytics/nova-bar-metrics)
